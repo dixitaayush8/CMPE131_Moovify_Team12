@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Search for a Movie</title>
+		</head>
+		<body>
+			<form name="some" method = "GET" action="/search">
+			<div class="form-group">
+				<p>Enter movie to search below:</p>
+				<input class="form-control" type="text" name="q" value="{{ request.GET.q }}">
+				<input type="submit" value="Search" class="btn btn-default" name = "r">
+			</div>
+			<p>Custom search options: </p> 		
+			<input type="submit" value="Alphabetical" name="p">
+			<input type="submit" value="Release Date (Newest to Oldest)" name="n">
+			<p>Want to search a movie by genre? Type in one given genre below and click away! (Worth the wait!) </p>
+			<input type="submit" value="Filter" name="g">
+			<input class="form-control" type="text" name="l" value="{{ request.GET.l }}">
+			<p>**Genres limited to: 
+				<p>Action, Animation, Biography, Comedy, Crime, Documentary, Drama, Family, Fantasy, Film-Noir, History, Horror, Music, Musical, Mystery, Romance, Sci-Fi, Sport, Thriller, War, and Western.</p>
+			</form>
+			{% if search == True %}
+			{% if moviesData == "Genre does not match with the movie." %}
+			<h3>Genre does not match with the movie.</h3>
+			{% else %}
+			{% for m in moviesData %}
+			<h3>{{m}}</h3>
+			{% endfor %}
+			{% endif %}
+			{% endif %}
+		</body>
+</html>
