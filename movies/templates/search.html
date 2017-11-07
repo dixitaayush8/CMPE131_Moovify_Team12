@@ -20,7 +20,9 @@
 				<p>Action, Animation, Biography, Comedy, Crime, Documentary, Drama, Family, Fantasy, Film-Noir, History, Horror, Music, Musical, Mystery, Romance, Sci-Fi, Sport, Thriller, War, and Western.</p>
 			</form>
 			{% if search == True %}
-			{% if moviesData == "Genre does not match with the movie." %}
+			{% if moviesData == "nah" %}
+			<h3>No movies to display</h3>
+			{% elif moviesData == "Genre does not match with the movie." %}
 			<h3>Genre does not match with the movie.</h3>
 			{% else %}
 			{% for m in moviesData %}

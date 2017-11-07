@@ -18,6 +18,8 @@ class Movie(models.Model):
 		for movies in ia.search_movie(title):
 			titleSearch = movies['title']
 			self.moviesData.setdefault(titleKey, []).append(titleSearch)
+		if not self.moviesData:
+			return 'nah'
 		return self.moviesData['titles']
 
 	def getMoviesAlphabetical(self,title):
@@ -27,6 +29,8 @@ class Movie(models.Model):
 		for movies in ia.search_movie(title):
 			titleSearch = movies['title']
 			self.moviesData.setdefault(titleKey, []).append(titleSearch)
+		if not self.moviesData:
+			return 'nah'
 		self.moviesData['titles'].sort()
 		return self.moviesData['titles']
 
@@ -51,6 +55,8 @@ class Movie(models.Model):
 		while i < len(someDict):
 			self.moviesData.setdefault(titleKey,[]).append(someDict[i][0])
 			i+=1
+		if not self.moviesData:
+			return 'nah'
 		return self.moviesData['titles']
 
 	def getMoviesByGenre(self,title,genre):
