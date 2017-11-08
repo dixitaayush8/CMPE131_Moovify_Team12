@@ -15,24 +15,31 @@ class Movie(models.Model):
 		self.moviesData = {}
 		titleKey = 'titles'
 		ia = IMDb('http', useModule='lxml')
-		for movies in ia.search_movie(title):
-			titleSearch = movies['title']
-			self.moviesData.setdefault(titleKey, []).append(titleSearch)
-		if not self.moviesData:
-			return 'nah'
-		return self.moviesData['titles']
+		try:
+			for movies in ia.search_movie(title):
+				titleSearch = movies['title']
+				self.moviesData.setdefault(titleKey, []).append(titleSearch)
+			if not self.moviesData:
+				return 'nah'
+			return self.moviesData['titles']
+		except:
+			return 'yoyo'
+
 
 	def getMoviesAlphabetical(self,title):
 		self.moviesData = {}
 		titleKey = 'titles'
 		ia = IMDb('http', useModule='lxml')
-		for movies in ia.search_movie(title):
-			titleSearch = movies['title']
-			self.moviesData.setdefault(titleKey, []).append(titleSearch)
-		if not self.moviesData:
-			return 'nah'
-		self.moviesData['titles'].sort()
-		return self.moviesData['titles']
+		try:
+			for movies in ia.search_movie(title):
+				titleSearch = movies['title']
+				self.moviesData.setdefault(titleKey, []).append(titleSearch)
+			if not self.moviesData:
+				return 'nah'
+			self.moviesData['titles'].sort()
+			return self.moviesData['titles']
+		except:
+			return 'yoyo'
 
 	def getMoviesInOrder(self,title): 
 		self.moviesData = {}
@@ -40,24 +47,27 @@ class Movie(models.Model):
 		titleKey = 'titles'
 		yearKey = 'years'
 		ia = IMDb('http', useModule='lxml')
-		for movies in ia.search_movie(title):
-			theID = movies.movieID
-			theRealDeal = ia.get_movie(theID)
-			if 'year' not in theRealDeal.keys():
-				theYear = 1000
-			else:
-				theYear = theRealDeal["year"]
-			titleSearch = movies['title']
-			self.updatedList[titleSearch] = theYear
-		c = Counter(self.updatedList)
-		someDict = c.most_common()
-		i = 0
-		while i < len(someDict):
-			self.moviesData.setdefault(titleKey,[]).append(someDict[i][0])
-			i+=1
-		if not self.moviesData:
-			return 'nah'
-		return self.moviesData['titles']
+		try:
+			for movies in ia.search_movie(title):
+				theID = movies.movieID
+				theRealDeal = ia.get_movie(theID)
+				if 'year' not in theRealDeal.keys():
+					theYear = 1000
+				else:
+					theYear = theRealDeal["year"]
+				titleSearch = movies['title']
+				self.updatedList[titleSearch] = theYear
+			c = Counter(self.updatedList)
+			someDict = c.most_common()
+			i = 0
+			while i < len(someDict):
+				self.moviesData.setdefault(titleKey,[]).append(someDict[i][0])
+				i+=1
+			if not self.moviesData:
+				return 'nah'
+			return self.moviesData['titles']
+		except:
+			return 'yoyo'
 
 	def getMoviesByGenre(self,title,genre):
 		genre = genre.lower()
@@ -68,20 +78,23 @@ class Movie(models.Model):
 		titleKey = 'titles'
 		genreKey = 'genres'
 		ia = IMDb('http', useModule='lxml')
-		for movies in ia.search_movie(title):
-			theID = movies.movieID
-			theRealDeal = ia.get_movie(theID)
-			if 'genres' not in theRealDeal.keys():
-				theGenre = 'NA'
-			else:
-				theGenre = theRealDeal["genres"]
-			titleSearch = movies['title']
-			updatedList[titleSearch] = theGenre
-		for n in updatedList:
-			if genre in updatedList[n]:
-				self.moviesData.setdefault(titleKey,[]).append(n)
-		if not self.moviesData:
-			return 'Genre does not match with the movie.'
-		return self.moviesData['titles']
+		try:
+			for movies in ia.search_movie(title):
+				theID = movies.movieID
+				theRealDeal = ia.get_movie(theID)
+				if 'genres' not in theRealDeal.keys():
+					theGenre = 'NA'
+				else:
+					theGenre = theRealDeal["genres"]
+				titleSearch = movies['title']
+				updatedList[titleSearch] = theGenre
+			for n in updatedList:
+				if genre in updatedList[n]:
+					self.moviesData.setdefault(titleKey,[]).append(n)
+			if not self.moviesData:
+				return 'Genre does not match with the movie.'
+			return self.moviesData['titles']
+		except:
+			return 'yoyo'
 
 

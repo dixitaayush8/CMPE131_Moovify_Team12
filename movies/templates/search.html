@@ -22,6 +22,8 @@
 			{% if search == True %}
 			{% if moviesData == "nah" %}
 			<h3>No movies to display</h3>
+			{% elif moviesData == "yoyo" %}
+			<h3>Uh oh. There is an error. Check your connectivity to Internet. Otherwise, the IMDb server is down.</h3>
 			{% elif moviesData == "Genre does not match with the movie." %}
 			<h3>Genre does not match with the movie.</h3>
 			{% else %}
