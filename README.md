@@ -11,4 +11,4 @@ To ensure that this project works (see requirements.txt for reference):
 
 3. Install the [IMDBPy API](https://github.com/alberanid/imdbpy)(pip install git+https://github.com/alberanid/imdbpy).
 
-To run the project, navigate to the folder of the project and type in "python manage.py runserver" and copy and paste the link displayed on the console to your browser.
+To run the project, download or clone this project and unzip the zip file of the project. Afterwards, on Terminal/Command Prompt, navigate to the directory of the project, type in "python manage.py runserver", and copy and paste the link displayed on the console to your browser.
