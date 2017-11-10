@@ -2,7 +2,7 @@
 
 Do the following procedures in order:
 
-If you are running this application on MacOS, have all components (including those of C++) of [Xcode](https://developer.apple.com/xcode/) installed. If you are running this application on Windows, download and install/"repair" [Microsoft Visual C++ Compiler for Python 2.7](https://www.microsoft.com/en-us/download/details.aspx?id=44266). 
+If you are running this application on Windows, download and install/"repair" [Microsoft Visual C++ Compiler for Python 2.7](https://www.microsoft.com/en-us/download/details.aspx?id=44266). If you are running this application on MacOS, no need to install C++ compiler because it is built-in.
 
 To ensure that this project works (see requirements.txt for reference): 
 1. download and install [Python 2.7](https://www.python.org/downloads/release/python-2713/).
