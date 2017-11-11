@@ -12,3 +12,7 @@ To ensure that this project works (see requirements.txt for reference):
 3. Install the [IMDBPy API](https://github.com/alberanid/imdbpy) (pip install git+https://github.com/alberanid/imdbpy).
 
 To run the project, download or clone this project and unzip the zip file of the project. Afterwards, on Terminal/Command Prompt, navigate to the directory of the project, type in "python manage.py runserver", and copy and paste the link displayed on the console to your browser.
+
+Completed functional requirements:
+1. Users can log in or register.
+2. Users can search for movies by title, alphabetical order, release date, or genre. (Login is optional for searching.)
