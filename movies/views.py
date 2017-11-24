@@ -33,7 +33,7 @@ def search(request):
 					else:
 						theRating = theRealDeal['rating']
 					if 'year' not in theRealDeal.keys():
-						theYear = 1000
+						theYear = 'Release date unknown'
 					else:
 						theYear = theRealDeal['year']
 					titleSearch = movies['title']

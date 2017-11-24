@@ -30,6 +30,8 @@
 			{% else %}
 			{% for m in moviesData %}
 			<h3><a href="{{ m.movie_id }}" name="clicked">{{m.title}}</a></h3> 
+			<p>{{m.release_date}}</p>
+			<p>{{m.genre}}</p>
 			{% endfor %}
 			{% endif %}
 			{% endif %}

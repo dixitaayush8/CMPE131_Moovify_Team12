@@ -16,4 +16,4 @@ To run the project, download or clone this project and unzip the zip file of the
 Completed functional requirements:
 1. Users can log in or register.
 2. Users can search for movies by title, alphabetical order, release date, or genre. (Login is optional for searching.)
-3. Database insertion for movies during search. 
+3. Database insertion for movies during search to easily access more information about each movie upfront. 
