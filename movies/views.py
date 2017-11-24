@@ -36,9 +36,13 @@ def search(request):
 						theYear = 'Release date unknown'
 					else:
 						theYear = theRealDeal['year']
+					if 'cover url' not in theRealDeal.keys():
+						posterOne = 'http://www.cineart.be/Documents/Document/Large/20120510153359-NoPosterAvailable.jpg'
+					else:
+						posterOne = theRealDeal['cover url']
 					titleSearch = movies['title']
 					print titleSearch
-					theMovie = MovieInfo.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname)
+					theMovie = MovieInfo.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne)
 					moviesData = MovieInfo.objects.filter(query=searchname) #modify this
 				# if not theMovie:
 				# 	moviesData = 'errorOne'

@@ -163,6 +163,7 @@ class MovieInfo(models.Model):
 	release_date = models.CharField(max_length=100)
 	rating = models.CharField(max_length = 10)
 	query = models.CharField(max_length = 100, default='')
+	poster = models.CharField(max_length = 100, default='No poster available')
 
 class MovieInfoManager(models.Manager):
 	def delete_all(self):

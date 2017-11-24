@@ -29,6 +29,7 @@
 			<h3>Genre does not match with the movie.</h3>
 			{% else %}
 			{% for m in moviesData %}
+			<img src="{{m.poster}}">
 			<h3><a href="{{ m.movie_id }}" name="clicked">{{m.title}}</a></h3> 
 			<p>{{m.release_date}}</p>
 			<p>{{m.genre}}</p>
