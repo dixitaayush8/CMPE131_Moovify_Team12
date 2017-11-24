@@ -21,15 +21,15 @@
 				<p>Action, Animation, Biography, Comedy, Crime, Documentary, Drama, Family, Fantasy, Film-Noir, History, Horror, Music, Musical, Mystery, Romance, Sci-Fi, Sport, Thriller, War, and Western.</p>
 			</form>
 			{% if search == True %}
-			{% if moviesData == "nah" %}
+			{% if moviesData == "errorOne" %}
 			<h3>No movies to display</h3>
-			{% elif moviesData == "yoyo" %}
+			{% elif moviesData == "errorTwo" %}
 			<h3>Uh oh. There is an error. Check your connectivity to Internet. Otherwise, the IMDb server is down.</h3>
 			{% elif moviesData == "Genre does not match with the movie." %}
 			<h3>Genre does not match with the movie.</h3>
 			{% else %}
 			{% for m in moviesData %}
-			<h3>{{m}}</h3>
+			<h3><a href="{{ m.movie_id }}" name="clicked">{{m.title}}</a></h3> 
 			{% endfor %}
 			{% endif %}
 			{% endif %}
