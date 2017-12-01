@@ -2,6 +2,11 @@
 <html>
 	<head>
 		<title>Search for a Movie</title>
+		<style>
+			img {
+				max-width:100%;
+			}
+		</style>
 		</head>
 		<body>
 			<p><a href="/">Home</a></p>
@@ -25,12 +30,12 @@
 			<h3>No movies to display</h3>
 			{% elif moviesData == "errorTwo" %}
 			<h3>Uh oh. There is an error. Check your connectivity to Internet. Otherwise, the IMDb server is down.</h3>
-			{% elif moviesData == "Genre does not match with the movie." %}
+			{% elif moviesData == "Genre does not match with title" %}
 			<h3>Genre does not match with the movie.</h3>
 			{% else %}
 			{% for m in moviesData %}
-			<img src="{{m.poster}}">
-			<h3><a href="{{ m.movie_id }}" name="clicked">{{m.title}}</a></h3> 
+			<img src="{{m.bigposter}}" width=100>
+			<h3><a href="/movie/{{m.movie_id}}" name = "clicked">{{m.title}}</a></h3> 
 			<p>{{m.release_date}}</p>
 			<p>{{m.genre}}</p>
 			{% endfor %}

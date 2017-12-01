@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+img {
+	max-width:100%;
+}
+</style>
+	<title>{{ movie_pg.title }}</title>
+	<body>
+		<img src="{{movie_pg.bigposter}}" width = 300/>
+    <h2>{{ movie_pg.title }}</h2>
+    <h3>Year: </h3>
+    <p>{{movie_pg.release_date}}</p>
+	<h3>Plot: </h3>    
+	<p>{{movie_pg.summary}}</p> 
+	<h3>Genres: </h3>
+	<p>{{movie_pg.genre}}</p>
+	<h3>Current Rating: </h3>
+	{% if movie_pg.rating == "No ratings yet" %}
+	<p>{{movie_pg.rating}}</p>
+	{% else %}
+	<p>{{movie_pg.rating}}/10</p>
+	{% endif %}
+	</body>
+</head>
+</html>
+

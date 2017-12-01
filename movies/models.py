@@ -158,12 +158,23 @@ class Movie(models.Model):
 
 class MovieInfo(models.Model):
 	title = models.CharField(max_length=100)
-	movie_id = models.CharField(max_length=10)
+	movie_id = models.CharField(max_length=10, primary_key=True)
 	genre = models.CharField(max_length=100)
 	release_date = models.CharField(max_length=100)
 	rating = models.CharField(max_length = 10)
 	query = models.CharField(max_length = 100, default='')
 	poster = models.CharField(max_length = 100, default='No poster available')
+	summary = models.CharField(max_length = 200, default='No summary at this time')
+	bigposter = models.CharField(max_length = 300, default='No poster available')
+
+# class page(models.Model):
+# 	title = models.CharField(max_length=100)
+# 	genre = models.CharField(max_length=100)
+# 	release_date = models.CharField(max_length=100)
+# 	rating = models.CharField(max_length=10)
+# 	query = models.CharField(max_length = 10)
+# 	poster = models.CharField(max_length = 100, default='No poster available')
+# 	movie = models.ForeignKey(MovieInfo, default=1)
 
 class MovieInfoManager(models.Manager):
 	def delete_all(self):

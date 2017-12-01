@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
-from django.shortcuts import render
+import unicodedata
+from django.shortcuts import render, get_object_or_404, render_to_response, get_list_or_404
 from django.db import transaction
-from .models import Movie, MovieInfo, MovieInfoManager
+from .models import MovieInfo, MovieInfoManager
 from imdb import IMDb
 from collections import Counter
 from django import forms
@@ -27,7 +27,8 @@ def search(request):
 					if 'genres' not in theRealDeal.keys():
 						theGenre = 'NA'
 					else:
-						theGenre = theRealDeal['genres']
+						somelist = [str(x) for x in theRealDeal['genres']]
+						theGenre = ', '.join(somelist)
 					if 'rating' not in theRealDeal.keys():
 						theRating = 'No ratings yet'
 					else:
@@ -40,9 +41,17 @@ def search(request):
 						posterOne = 'http://www.cineart.be/Documents/Document/Large/20120510153359-NoPosterAvailable.jpg'
 					else:
 						posterOne = theRealDeal['cover url']
+					if 'plot outline' not in theRealDeal.keys():
+						plot = 'No plot available at this time'
+					else:
+						plot = theRealDeal['plot outline']
+					if 'full-size cover url' not in theRealDeal.keys():
+						posterTwo = 'http://www.cineart.be/Documents/Document/Large/20120510153359-NoPosterAvailable.jpg'
+					else:
+						posterTwo = theRealDeal['full-size cover url']
 					titleSearch = movies['title']
 					print titleSearch
-					theMovie = MovieInfo.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne)
+					theMovie = MovieInfo.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo)
 					moviesData = MovieInfo.objects.filter(query=searchname) #modify this
 				# if not theMovie:
 				# 	moviesData = 'errorOne'
@@ -50,16 +59,135 @@ def search(request):
 				# moviesData = 'errorTwo'
 				#moviesData = getMoviesData(searchname) 
 		if 'p' in request.GET:
-			moviesData = m.getMoviesAlphabetical(searchname)
+			titleKey = 'titles'
+			ia = IMDb('http', useModule='lxml')
+			m.delete_all()
+			for movies in ia.search_movie(searchname):
+					theID = movies.movieID
+					theRealDeal = ia.get_movie(theID)
+					if 'genres' not in theRealDeal.keys():
+						theGenre = 'NA'
+					else:
+						somelist = [str(x) for x in theRealDeal['genres']]
+						theGenre = ', '.join(somelist)
+					if 'rating' not in theRealDeal.keys():
+						theRating = 'No ratings yet'
+					else:
+						theRating = theRealDeal['rating']
+					if 'year' not in theRealDeal.keys():
+						theYear = 'Release date unknown'
+					else:
+						theYear = theRealDeal['year']
+					if 'cover url' not in theRealDeal.keys():
+						posterOne = 'http://www.cineart.be/Documents/Document/Large/20120510153359-NoPosterAvailable.jpg'
+					else:
+						posterOne = theRealDeal['cover url']
+					if 'plot outline' not in theRealDeal.keys():
+						plot = 'No plot available at this time'
+					else:
+						plot = theRealDeal['plot outline']
+					if 'full-size cover url' not in theRealDeal.keys():
+						posterTwo = 'http://www.cineart.be/Documents/Document/Large/20120510153359-NoPosterAvailable.jpg'
+					else:
+						posterTwo = theRealDeal['full-size cover url']
+					titleSearch = movies['title']
+					print titleSearch
+					theMovie = MovieInfo.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo)
+					moviesData = MovieInfo.objects.filter(query=searchname).order_by('title')
 		if 'n' in request.GET:
-			moviesData = m.getMoviesInOrder(searchname)
+			titleKey = 'titles'
+			ia = IMDb('http', useModule='lxml')
+			m.delete_all()
+			for movies in ia.search_movie(searchname):
+					theID = movies.movieID
+					theRealDeal = ia.get_movie(theID)
+					if 'genres' not in theRealDeal.keys():
+						theGenre = 'NA'
+					else:
+						somelist = [str(x) for x in theRealDeal['genres']]
+						theGenre = ', '.join(somelist)
+					if 'rating' not in theRealDeal.keys():
+						theRating = 'No ratings yet'
+					else:
+						theRating = theRealDeal['rating']
+					if 'year' not in theRealDeal.keys():
+						theYear = 'Release date unknown'
+					else:
+						theYear = theRealDeal['year']
+					if 'cover url' not in theRealDeal.keys():
+						posterOne = 'http://www.cineart.be/Documents/Document/Large/20120510153359-NoPosterAvailable.jpg'
+					else:
+						posterOne = theRealDeal['cover url']
+					if 'plot outline' not in theRealDeal.keys():
+						plot = 'No plot available at this time'
+					else:
+						plot = theRealDeal['plot outline']
+					if 'full-size cover url' not in theRealDeal.keys():
+						posterTwo = 'http://www.cineart.be/Documents/Document/Large/20120510153359-NoPosterAvailable.jpg'
+					else:
+						posterTwo = theRealDeal['full-size cover url']
+					titleSearch = movies['title']
+					print titleSearch
+					theMovie = MovieInfo.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo)
+					moviesData = MovieInfo.objects.filter(query=searchname).order_by('-release_date')
+			#moviesData = m.getMoviesInOrder(searchname)
 		if request.GET.get('l') is not None:
-			genre = request.GET.get('l')
+			thaGenre = request.GET.get('l')
+			thaGenre = thaGenre.lower()
+			thaGenre = thaGenre.title()
 			if 'g' in request.GET:
-				moviesData = m.getMoviesByGenre(searchname,genre)
+				#somelist = []
+				count = 0
+				titleKey = 'titles'
+				ia = IMDb('http', useModule='lxml')
+				m.delete_all()
+				for movies in ia.search_movie(searchname):
+						theID = movies.movieID
+						theRealDeal = ia.get_movie(theID)
+						if 'genres' not in theRealDeal.keys():
+							theGenre = 'NA'
+							somelist = ['NA']
+						else:
+							somelist = [str(x) for x in theRealDeal['genres']]
+							theGenre = ', '.join(somelist)
+						if 'rating' not in theRealDeal.keys():
+							theRating = 'No ratings yet'
+						else:
+							theRating = theRealDeal['rating']
+						if 'year' not in theRealDeal.keys():
+							theYear = 'Release date unknown'
+						else:
+							theYear = theRealDeal['year']
+						if 'cover url' not in theRealDeal.keys():
+							posterOne = 'http://www.cineart.be/Documents/Document/Large/20120510153359-NoPosterAvailable.jpg'
+						else:
+							posterOne = theRealDeal['cover url']
+						if 'plot outline' not in theRealDeal.keys():
+							plot = 'No plot available at this time'
+						else:
+							plot = theRealDeal['plot outline']
+						if 'full-size cover url' not in theRealDeal.keys():
+							posterTwo = 'http://www.cineart.be/Documents/Document/Large/20120510153359-NoPosterAvailable.jpg'
+						else:
+							posterTwo = theRealDeal['full-size cover url']
+						titleSearch = movies['title']
+						print titleSearch
+						if thaGenre in somelist:
+							theMovie = MovieInfo.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo)
+							moviesData = MovieInfo.objects.filter(query=searchname)
+							count = count + 1
+				if count == 0:
+					moviesData = 'Genre does not match with title'
+				#moviesData = m.getMoviesByGenre(searchname,genre)
 		return render(request, 'search.html',{'moviesData': moviesData, 'search': True})
 	else:
 		return render(request, 'search.html')
+
+def movie_page(request, movie_id):
+	#movie_pg = get_list_or_404(MovieInfo, movie_id=movie_id)
+	movie_pg = MovieInfo.objects.get(movie_id=movie_id)
+	#print movie_pg.title
+	return render_to_response('movie.html',{'movie_pg':movie_pg})
 
 # def movie(request):
 # 	if request.GET:
