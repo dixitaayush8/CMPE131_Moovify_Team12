@@ -3,8 +3,9 @@
 <head>
 	<body>
 		<title>Suggested Searches</title>
+		<p><a href="/">Home</a></p>
 		{% if movies == 'Nonexistent' %}
-		<p>No suggested movies</p>
+		<p>No suggested searches yet. <a href="/search">Search</a> and rate a GOOD movie first!</p>
 		{% else %}
 		<p>Copy the movie title you want and...</p>
 		{% for y in movies %}

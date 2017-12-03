@@ -3,8 +3,9 @@
 <head>
 	<body>
 		<title>My Reviews</title>
+		<p><a href="/">Home</a></p>
 		{% if review_pg == 'nope' %}
-		<p>No reviews yet</p>
+		<p>You haven't made any reviews yet. Search for some movies to rate <a href="/search">here</a>!</p>
 		{% else %}
 		{% for n in review_pg %}
 		<h3>{{n.movie_title}}</h3>

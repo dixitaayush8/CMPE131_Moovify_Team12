@@ -36,7 +36,7 @@ img {
 	{% endif %}
 	<h3>Reviews: </h3>
 	{% if getReviews == 'No reviews yet' %}
-	<p>No reviews yet</p>
+	<p>No reviews yet.</p>
 	{% else %}
 	{% for m in getReviews %}
 	<p>{{m.user}}: {{m.comment}}</p>

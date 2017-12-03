@@ -202,7 +202,6 @@ def search(request):
 			thaGenre = thaGenre.lower()
 			thaGenre = thaGenre.title()
 			if 'g' in request.GET:
-				#somelist = []
 				count = 0
 				titleKey = 'titles'
 				ia = IMDb('http', useModule='lxml')
@@ -277,13 +276,10 @@ def movie_page(request, movie_id):
 	k = ia.get_movie(movie_pg.movie_id)
 	theMovieTitle = str(k)
 	print theMovieTitle
-	#userReviews = Review.objects.filter(user=theUser)
 	allReviews = Review.objects.filter(movie_id=movie_id)
 	average = allReviews.aggregate(Avg('rating'))
-	#print allReviews.movie_title
 	if not allReviews:
 		allReviews = 'No reviews yet'
-
 	if request.GET:
 		theComment = request.GET.get('review')
 		print 'yuh'
@@ -295,7 +291,6 @@ def movie_page(request, movie_id):
 	 		allReviews = Review.objects.filter(movie_id=movie_id)
 	 		average = allReviews.aggregate(Avg('rating'))
 	 		return render_to_response('movie.html',{'movie_pg':movie_pg, 'theUser':theUser, 'getReviews': allReviews, 'average': average})
- 	#movie_pg = get_list_or_404(MovieInfo, movie_id=movie_id)
 	else:
 		return render_to_response('movie.html',{'movie_pg':movie_pg, 'theUser': theUser, 'getReviews': allReviews, 'average': average})
 

@@ -5,8 +5,8 @@
 </head>
 <body>
     {% if user.is_authenticated %}
-    <p>hello</p>
-    <p>welcome {{ user.username }}</p>
+    <p>Welcome, {{user.username}}. </p>
+    <p>Handle that post-movie or pre-movie experience right with Moovify!</p>
     <p><a href="/logout">Logout</a></p>
     <p><a href="/search">Search a Movie</a></p>
     <p><a href="/review_list">Movies I've Reviewed</a></p>
