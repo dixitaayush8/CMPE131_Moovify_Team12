@@ -17,18 +17,20 @@ img {
 	<h3>Genres: </h3>
 	<p>{{movie_pg.genre}}</p>
 	<h3>Current Rating: </h3>
-	{% if movie_pg.rating == "No ratings yet" %}
-	<p>{{movie_pg.rating}}</p>
+	{% if average.rating__avg == 'None' %}
+	<p>No average ratings yet</p>
 	{% else %}
-	<p>{{movie_pg.rating}}/10</p>
+	<p>{{average.rating__avg}}/10.0</p>
 	{% endif %}
 	{% if theUser.is_authenticated %}
 		<p>Write a review, {{theUser.username}}.</p>
 	<form name="some" method = "GET" action="/movie/{{movie_pg.movie_id}}">
-		<input class="form-control" type="text" name="review" value="">
+		<input class="form-control" type="text" name="review" value="Type review here">
+		<input class="form-control" type="text" name="number" value="number between 0-10">
 		<input type="submit" value="submit" class="btn btn-default" name = "moovify">
 	</form>
 	{% endif %}
+	<h3>Reviews: </h3>
 	{% if getReviews == 'No reviews yet' %}
 	<p>No reviews yet</p>
 	{% else %}

@@ -9,6 +9,7 @@
 		{% for n in review_pg %}
 		<h3>{{n.movie_title}}</h3>
 		<p>Review: {{n.comment}}</p>
+		<p>Rating: {{n.rating}}/10.0</p>
 		{% endfor %}
 		{% endif %}
 	</body>

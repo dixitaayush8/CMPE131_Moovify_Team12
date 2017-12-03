@@ -10,6 +10,7 @@ from imdb import IMDb
 from collections import Counter
 from django import forms
 from .forms import SearchForm, ReviewForm
+from django.db.models import Avg
 from imdb import IMDb
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 # Create your views here.
@@ -200,21 +201,25 @@ def movie_page(request, movie_id):
 	print theMovieTitle
 	#userReviews = Review.objects.filter(user=theUser)
 	allReviews = Review.objects.filter(movie_id=movie_id)
+	average = allReviews.aggregate(Avg('rating'))
 	#print allReviews.movie_title
 	if not allReviews:
 		allReviews = 'No reviews yet'
+
 	if request.GET:
 		theComment = request.GET.get('review')
 		print 'yuh'
+		theRating = request.GET.get('number')
 		if 'moovify' in request.GET:
 		 	theMovie = movie_pg
-	 		theReview = Review.objects.create(movie_id=movie_id, user=theUser,comment=theComment, movie_title=theMovieTitle)
+	 		theReview = Review.objects.create(movie_id=movie_id, user=theUser,comment=theComment, movie_title=theMovieTitle,rating=theRating)
 	 		print theReview.movie_title
 	 		allReviews = Review.objects.filter(movie_id=movie_id)
-	 		return render_to_response('movie.html',{'movie_pg':movie_pg, 'theUser':theUser, 'getReviews': allReviews})
+	 		average = allReviews.aggregate(Avg('rating'))
+	 		return render_to_response('movie.html',{'movie_pg':movie_pg, 'theUser':theUser, 'getReviews': allReviews, 'average': average})
  	#movie_pg = get_list_or_404(MovieInfo, movie_id=movie_id)
 	else:
-		return render_to_response('movie.html',{'movie_pg':movie_pg, 'theUser': theUser, 'getReviews': allReviews})
+		return render_to_response('movie.html',{'movie_pg':movie_pg, 'theUser': theUser, 'getReviews': allReviews, 'average': average})
 
 def list_reviews(request):
 	theUser = request.user

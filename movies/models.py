@@ -24,6 +24,7 @@ class Review(models.Model):
 	user = models.ForeignKey(User)
 	comment = models.TextField()
 	movie_title = models.CharField(max_length=100, default='')
+	rating = models.FloatField(max_length=2, default=1)
 	def __str__(self):
 		return self.comment
 
