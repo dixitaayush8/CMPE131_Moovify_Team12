@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import unicodedata
+import random
 from django.shortcuts import render, get_object_or_404, render_to_response, get_list_or_404
 from django.db import transaction
 from django.contrib.auth.models import User
@@ -304,3 +305,17 @@ def list_reviews(request):
 	if not review_pg:
 		review_pg = 'nope'
 	return render_to_response('review_list.html',{'review_pg': review_pg})
+
+def suggested(request):
+	movieResults = []
+	movies = []
+	theUser = request.user
+	reviews = Review.objects.filter(user=theUser)
+	if not reviews:
+		movies = 'Nonexistent'
+	for r in reviews:
+		for i in ia.search_movie(r.movie_title):
+			movieResults.append(i['title'])
+		movieResults.remove(r.movie_title)
+		movies.append(random.choice(movieResults))
+	return render_to_response('suggested.html',{'movies': movies})

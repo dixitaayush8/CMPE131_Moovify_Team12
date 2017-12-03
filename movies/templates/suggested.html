@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<body>
+		<title>Suggested Searches</title>
+		{% if movies == 'Nonexistent' %}
+		<p>No suggested movies</p>
+		{% else %}
+		<p>Copy the movie title you want and...</p>
+		{% for y in movies %}
+		<h3>{{y}}</h3>
+		{% endfor %}
+		<p><a href="/search">...paste it here!</a></p>
+		{% endif %}
+	</body>
+</head>
