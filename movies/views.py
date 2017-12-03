@@ -314,8 +314,9 @@ def suggested(request):
 	if not reviews:
 		movies = 'Nonexistent'
 	for r in reviews:
-		for i in ia.search_movie(r.movie_title):
-			movieResults.append(i['title'])
-		movieResults.remove(r.movie_title)
-		movies.append(random.choice(movieResults))
+		if r.rating > 5:
+			for i in ia.search_movie(r.movie_title):
+				movieResults.append(i['title'])
+			movieResults.remove(r.movie_title)
+			movies.append(random.choice(movieResults))
 	return render_to_response('suggested.html',{'movies': movies})

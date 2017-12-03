@@ -19,3 +19,4 @@ Completed functional requirements:
 3. Database insertion for movies during search to easily access more information about each movie upfront. 
 4. User can select a movie after searching for a movie and see information displayed about the movie. Unique URL used for each movie.
 5. User can comment reviews about movies and rate movies on a scale from 0 to 10 (decimals included).
+6. User can get search recommendations for movies based on what they reviewed.

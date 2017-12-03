@@ -40,6 +40,7 @@ img {
 	{% else %}
 	{% for m in getReviews %}
 	<p>{{m.user}}: {{m.comment}}</p>
+	<p>Rating: {{m.rating}}</p>
 	{% endfor %}
 	{% endif %}
 	</body>
