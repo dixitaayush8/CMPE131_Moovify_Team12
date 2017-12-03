@@ -195,9 +195,12 @@ def movie_page(request, movie_id):
 	movie_pg = MovieInfo.objects.get(movie_id=movie_id)
 	theUser = request.user
 	print theUser.username
+	k = ia.get_movie(movie_pg.movie_id)
+	theMovieTitle = str(k)
+	print theMovieTitle
 	#userReviews = Review.objects.filter(user=theUser)
 	allReviews = Review.objects.filter(movie_id=movie_id)
-	print allReviews
+	#print allReviews.movie_title
 	if not allReviews:
 		allReviews = 'No reviews yet'
 	if request.GET:
@@ -205,12 +208,20 @@ def movie_page(request, movie_id):
 		print 'yuh'
 		if 'moovify' in request.GET:
 		 	theMovie = movie_pg
-	 		theReview = Review.objects.create(movie_id=movie_id, user=theUser,comment=theComment)
+	 		theReview = Review.objects.create(movie_id=movie_id, user=theUser,comment=theComment, movie_title=theMovieTitle)
+	 		print theReview.movie_title
 	 		allReviews = Review.objects.filter(movie_id=movie_id)
 	 		return render_to_response('movie.html',{'movie_pg':movie_pg, 'theUser':theUser, 'getReviews': allReviews})
  	#movie_pg = get_list_or_404(MovieInfo, movie_id=movie_id)
 	else:
 		return render_to_response('movie.html',{'movie_pg':movie_pg, 'theUser': theUser, 'getReviews': allReviews})
+
+def list_reviews(request):
+	theUser = request.user
+	review_pg = Review.objects.filter(user=theUser)
+	if not review_pg:
+		review_pg = 'nope'
+	return render_to_response('review_list.html',{'review_pg': review_pg})
 
 
 

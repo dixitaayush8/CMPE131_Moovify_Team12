@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<body>
+		<title>My Reviews</title>
+		{% if review_pg == 'nope' %}
+		<p>No reviews yet</p>
+		{% else %}
+		{% for n in review_pg %}
+		<h3>{{n.movie_title}}</h3>
+		<p>Review: {{n.comment}}</p>
+		{% endfor %}
+		{% endif %}
+	</body>
+</head>
+</html>
