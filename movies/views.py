@@ -13,7 +13,7 @@ from .forms import SearchForm, ReviewForm
 from django.db.models import Avg
 from imdb import IMDb
 from django.http import Http404, HttpResponse, HttpResponseRedirect
-# Create your views here.
+
 ia = IMDb()
 
 m = MovieInfoManager()
@@ -23,8 +23,6 @@ def search(request):
 		if 'r' in request.GET:
 			titleKey = 'titles'
 			ia = IMDb('http', useModule='lxml')
-			#reviews = Review.objects. 
-			#do something with reviews to prevent the review for the movie from going bye bye
 			m.delete_all()
 			for movies in ia.search_movie(searchname):
 					theID = movies.movieID
@@ -54,9 +52,29 @@ def search(request):
 						posterTwo = 'http://www.cineart.be/Documents/Document/Large/20120510153359-NoPosterAvailable.jpg'
 					else:
 						posterTwo = theRealDeal['full-size cover url']
+					if 'director' not in theRealDeal.keys():
+						director = 'No director'
+					else:
+						director = theRealDeal['director'][0]
+					if 'cast' not in theRealDeal.keys():
+						cast = 'No cast'
+					else:
+						try:
+							i=1
+							cast = str(theRealDeal['cast'][0])
+							if len(theRealDeal['cast']) > 0:
+								while i < len(theRealDeal['cast']):
+									#unOne = theRealDeal['cast'][i].decode('utf-8')
+								#if isinstance(theRealDeal['cast'][i], str):
+									cast = cast + ", " + str(theRealDeal['cast'][i])
+								#elif isinstance(theRealDeal['cast'][i], unicode):
+									#cast = cast + ", " + str(unicodedata.normalize('NFD', unOne).encode('ascii', 'ignore'))
+									i = i + 1
+						except UnicodeDecodeError:
+							cast = "Could not retrieve cast"
 					titleSearch = movies['title']
 					print titleSearch
-					theMovie = MovieInfo.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo)
+					theMovie = MovieInfo.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo, director=director, cast=cast)
 					#theMovieTwo = Movie.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo)
 					moviesData = MovieInfo.objects.filter(query=searchname) #modify this
 				# if not theMovie:
@@ -96,9 +114,29 @@ def search(request):
 						posterTwo = 'http://www.cineart.be/Documents/Document/Large/20120510153359-NoPosterAvailable.jpg'
 					else:
 						posterTwo = theRealDeal['full-size cover url']
+					if 'director' not in theRealDeal.keys():
+						director = 'No director'
+					else:
+						director = theRealDeal['director'][0]
+					if 'cast' not in theRealDeal.keys():
+						cast = 'No cast'
+					else:
+						try:
+							i=1
+							cast = str(theRealDeal['cast'][0])
+							if len(theRealDeal['cast']) > 0:
+								while i < len(theRealDeal['cast']):
+									#unOne = theRealDeal['cast'][i].decode('utf-8')
+								#if isinstance(theRealDeal['cast'][i], str):
+									cast = cast + ", " + str(theRealDeal['cast'][i])
+								#elif isinstance(theRealDeal['cast'][i], unicode):
+									#cast = cast + ", " + str(unicodedata.normalize('NFD', unOne).encode('ascii', 'ignore'))
+									i = i + 1
+						except UnicodeDecodeError:
+							cast = "Could not retrieve cast"
 					titleSearch = movies['title']
 					print titleSearch
-					theMovie = MovieInfo.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo)
+					theMovie = MovieInfo.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo, director = director, cast=cast)
 					#theMovieTwo = Movie.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo)
 
 					moviesData = MovieInfo.objects.filter(query=searchname).order_by('title')
@@ -134,11 +172,30 @@ def search(request):
 						posterTwo = 'http://www.cineart.be/Documents/Document/Large/20120510153359-NoPosterAvailable.jpg'
 					else:
 						posterTwo = theRealDeal['full-size cover url']
+					if 'director' not in theRealDeal.keys():
+						director = 'No director'
+					else:
+						director = theRealDeal['director'][0]
+					if 'cast' not in theRealDeal.keys():
+						cast = 'No cast'
+					else:
+						try:
+							i=1
+							cast = str(theRealDeal['cast'][0])
+							if len(theRealDeal['cast']) > 0:
+								while i < len(theRealDeal['cast']):
+									#unOne = theRealDeal['cast'][i].decode('utf-8')
+								#if isinstance(theRealDeal['cast'][i], str):
+									cast = cast + ", " + str(theRealDeal['cast'][i])
+								#elif isinstance(theRealDeal['cast'][i], unicode):
+									#cast = cast + ", " + str(unicodedata.normalize('NFD', unOne).encode('ascii', 'ignore'))
+									i = i + 1
+						except UnicodeDecodeError:
+							cast = "Could not retrieve cast"
 					titleSearch = movies['title']
 					print titleSearch
-					theMovie = MovieInfo.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo)
+					theMovie = MovieInfo.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo, director=director, cast=cast)
 					moviesData = MovieInfo.objects.filter(query=searchname).order_by('-release_date')
-			#moviesData = m.getMoviesInOrder(searchname)
 		if request.GET.get('l') is not None:
 			thaGenre = request.GET.get('l')
 			thaGenre = thaGenre.lower()
@@ -178,10 +235,30 @@ def search(request):
 							posterTwo = 'http://www.cineart.be/Documents/Document/Large/20120510153359-NoPosterAvailable.jpg'
 						else:
 							posterTwo = theRealDeal['full-size cover url']
+						if 'director' not in theRealDeal.keys():
+							director = 'No director'
+						else:
+							director = theRealDeal['director'][0]
+						if 'cast' not in theRealDeal.keys():
+							cast = 'No cast'
+						else:
+							try:
+								i=1
+								cast = str(theRealDeal['cast'][0])
+								if len(theRealDeal['cast']) > 0:
+									while i < len(theRealDeal['cast']):
+										#unOne = theRealDeal['cast'][i].decode('utf-8')
+									#if isinstance(theRealDeal['cast'][i], str):
+										cast = cast + ", " + str(theRealDeal['cast'][i])
+									#elif isinstance(theRealDeal['cast'][i], unicode):
+										#cast = cast + ", " + str(unicodedata.normalize('NFD', unOne).encode('ascii', 'ignore'))
+										i = i + 1
+							except UnicodeDecodeError:
+								cast = "Could not retrieve cast"
 						titleSearch = movies['title']
 						print titleSearch
 						if thaGenre in somelist:
-							theMovie = MovieInfo.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo)
+							theMovie = MovieInfo.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo, director=director, cast=cast)
 							#theMovieTwo = Movie.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo)
 							moviesData = MovieInfo.objects.filter(query=searchname)
 							count = count + 1
@@ -227,43 +304,3 @@ def list_reviews(request):
 	if not review_pg:
 		review_pg = 'nope'
 	return render_to_response('review_list.html',{'review_pg': review_pg})
-
-
-
-
-# def movie(request):
-# 	if request.GET:
-# 		if 'clicked' in request.GET:
-			
-# 	return render(request,'movie.html')
-
-
-# def getMoviesData(titles): #use movie ID for all of these 
-# 		theMovie = MovieInfo()
-# 		titleKey = 'titles'
-# 		ia = IMDb('http', useModule='lxml')
-# 		try:
-# 			for movies in ia.search_movie(titles):
-# 				theID = movies.movieID
-# 				theRealDeal = ia.get_movie(theID)
-# 				if 'genres' not in theRealDeal.keys():
-# 					theGenre = 'NA'
-# 				else:
-# 					theGenre = theRealDeal['genres']
-# 				if 'rating' not in theRealDeal.keys():
-# 					theRating = 'No ratings yet'
-# 				else:
-# 					theRating = theRealDeal['rating']
-# 				if 'year' not in theRealDeal.keys():
-# 					theYear = 1000
-# 				else:
-# 					theYear = theRealDeal['year']
-# 				titleSearch = movies['title']
-# 				theMovie = MovieInfo(title=titleSearch,movie_id=theID,genre=theGenre,release_date=year,rating=theRating)
-# 				theMovie.save()
-# 			if not theMovie:
-# 				return 'errorOne'
-# 			print theMovie
-# 			return theMovie
-# 		except:
-# 			return 'errorTwo'

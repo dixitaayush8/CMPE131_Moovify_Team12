@@ -17,6 +17,8 @@ class MovieInfo(models.Model):
 	poster = models.CharField(max_length = 100, default='No poster available')
 	summary = models.CharField(max_length = 200, default='No summary at this time')
 	bigposter = models.CharField(max_length = 300, default='No poster available')
+	director = models.CharField(max_length = 200, default='No director')
+	cast = models.CharField(max_length = 2000, default='No cast')
 
 
 class Review(models.Model):
