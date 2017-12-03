@@ -22,6 +22,20 @@ img {
 	{% else %}
 	<p>{{movie_pg.rating}}/10</p>
 	{% endif %}
+	{% if theUser.is_authenticated %}
+		<p>Write a review, {{theUser.username}}.</p>
+	<form name="some" method = "GET" action="/movie/{{movie_pg.movie_id}}">
+		<input class="form-control" type="text" name="review" value="">
+		<input type="submit" value="submit" class="btn btn-default" name = "moovify">
+	</form>
+	{% endif %}
+	{% if getReviews == 'No reviews yet' %}
+	<p>No reviews yet</p>
+	{% else %}
+	{% for m in getReviews %}
+	<p>{{m.user}}: {{m.comment}}</p>
+	{% endfor %}
+	{% endif %}
 	</body>
 </head>
 </html>

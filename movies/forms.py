@@ -6,3 +6,10 @@ class SearchForm(forms.Form):
 		label = 'Movie',
 		max_length = 100
 		)
+
+class ReviewForm(forms.Form):
+	review = forms.CharField(
+		widget = forms.Textarea,
+		required = True,
+		label = 'Review',
+		)

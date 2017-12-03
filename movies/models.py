@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from django.contrib.auth.models import User
 
 from django.db import models
+from django.utils import timezone
 
 from imdb import IMDb
 
 from collections import Counter
 
-class Movie(models.Model):
-	titles = models.CharField(max_length=100)
-	genre = models.CharField(max_length=100)
+#class Movie(models.Model):
+	# titles = models.CharField(max_length=100)
+	# genre = models.CharField(max_length=100)
 
 	# def getMoviesData(self,titles): #use movie ID for all of these 
 	# 	theMovie = MovieInfo()
@@ -42,57 +44,57 @@ class Movie(models.Model):
 	# 		return 'errorTwo'
 
 
-	def getMoviesAlphabetical(self,titles):
-		self.moviesData = {}
-		titleKey = 'titles'
-		ia = IMDb('http', useModule='lxml')
-		try:
-			for movies in ia.search_movie(titles):
-				titleSearch = movies['title']
-				self.moviesData.setdefault(titleKey, []).append(titleSearch)
-			if not self.moviesData:
-				return 'errorOne'
-			self.moviesData['titles'].sort()
-			return self.moviesData
-		except:
-			return 'errorTwo'
+	# def getMoviesAlphabetical(self,titles):
+	# 	self.moviesData = {}
+	# 	titleKey = 'titles'
+	# 	ia = IMDb('http', useModule='lxml')
+	# 	try:
+	# 		for movies in ia.search_movie(titles):
+	# 			titleSearch = movies['title']
+	# 			self.moviesData.setdefault(titleKey, []).append(titleSearch)
+	# 		if not self.moviesData:
+	# 			return 'errorOne'
+	# 		self.moviesData['titles'].sort()
+	# 		return self.moviesData
+	# 	except:
+	# 		return 'errorTwo'
 
-	def getMoviesInOrder(self,titles):
-		newDic = []
-		newDicTwo = []
-		someList = []
-		someDic = {}
-		dic = {}
-		tup = ()
-		listOne = []
-		listTwo = []
-		listThree = []
-		listFour = []
-		ia = IMDb('http', useModule='lxml')
-		for movies in ia.search_movie(titles):
-			someMovie = movies['title']
-			yolo = movies.movieID
-			lala = ia.get_movie(yolo)
-			if 'year' not in lala.keys():
-				theYear = 1000
-			else:
-				theYear = lala['year']
-			listThree.append(theYear)
-			listOne.append(someMovie)
-			listTwo.append(yolo)
-		newList = zip(listOne, listTwo)
-		newerList = zip(newList,listThree)
-		d = dict(newerList)
-		c = Counter(d)
-		di = c.most_common()
-		i = 0
-		while i < len(di):
-			newDic.append(di[i][0][0])
-			newDic.append(di[i][0][1])
-			newDicTwo.append(newDic)
-			i+=1
-			newDic = []
-		return newDicTwo
+	# def getMoviesInOrder(self,titles):
+	# 	newDic = []
+	# 	newDicTwo = []
+	# 	someList = []
+	# 	someDic = {}
+	# 	dic = {}
+	# 	tup = ()
+	# 	listOne = []
+	# 	listTwo = []
+	# 	listThree = []
+	# 	listFour = []
+	# 	ia = IMDb('http', useModule='lxml')
+	# 	for movies in ia.search_movie(titles):
+	# 		someMovie = movies['title']
+	# 		yolo = movies.movieID
+	# 		lala = ia.get_movie(yolo)
+	# 		if 'year' not in lala.keys():
+	# 			theYear = 1000
+	# 		else:
+	# 			theYear = lala['year']
+	# 		listThree.append(theYear)
+	# 		listOne.append(someMovie)
+	# 		listTwo.append(yolo)
+	# 	newList = zip(listOne, listTwo)
+	# 	newerList = zip(newList,listThree)
+	# 	d = dict(newerList)
+	# 	c = Counter(d)
+	# 	di = c.most_common()
+	# 	i = 0
+	# 	while i < len(di):
+	# 		newDic.append(di[i][0][0])
+	# 		newDic.append(di[i][0][1])
+	# 		newDicTwo.append(newDic)
+	# 		i+=1
+	# 		newDic = []
+	# 	return newDicTwo
 
 	# def getMoviesInOrder(self,title): 
 	# 	self.moviesData = {}
@@ -127,34 +129,34 @@ class Movie(models.Model):
 	# 	except:
 	# 		return 'yoyo'
 
-	def getMoviesByGenre(self,titles,genre):
-		genre = genre.lower()
-		genre = genre.title()
-		someList = {}
-		updatedList = {}
-		self.moviesData = {}
-		titleKey = 'titles'
-		genreKey = 'genres'
-		ia = IMDb('http', useModule='lxml')
-		try:
-			for movies in ia.search_movie(titles):
-				theID = movies.movieID
-				theRealDeal = ia.get_movie(theID)
-				if 'genres' not in theRealDeal.keys():
-					theGenre = 'NA'
-				else:
-					theGenre = theRealDeal["genres"]
-				titleSearch = movies['title']
-				updatedList[titleSearch] = theGenre
-			print updatedList
-			for n in updatedList:
-				if genre in updatedList[n]:
-					self.moviesData.setdefault(titleKey,[]).append(n)
-			if not self.moviesData:
-				return 'Genre does not match with the movie.'
-			return self.moviesData
-		except:
-			return 'errorTwo'
+	# def getMoviesByGenre(self,titles,genre):
+	# 	genre = genre.lower()
+	# 	genre = genre.title()
+	# 	someList = {}
+	# 	updatedList = {}
+	# 	self.moviesData = {}
+	# 	titleKey = 'titles'
+	# 	genreKey = 'genres'
+	# 	ia = IMDb('http', useModule='lxml')
+	# 	try:
+	# 		for movies in ia.search_movie(titles):
+	# 			theID = movies.movieID
+	# 			theRealDeal = ia.get_movie(theID)
+	# 			if 'genres' not in theRealDeal.keys():
+	# 				theGenre = 'NA'
+	# 			else:
+	# 				theGenre = theRealDeal["genres"]
+	# 			titleSearch = movies['title']
+	# 			updatedList[titleSearch] = theGenre
+	# 		print updatedList
+	# 		for n in updatedList:
+	# 			if genre in updatedList[n]:
+	# 				self.moviesData.setdefault(titleKey,[]).append(n)
+	# 		if not self.moviesData:
+	# 			return 'Genre does not match with the movie.'
+	# 		return self.moviesData
+	# 	except:
+	# 		return 'errorTwo'
 
 class MovieInfo(models.Model):
 	title = models.CharField(max_length=100)
@@ -167,6 +169,21 @@ class MovieInfo(models.Model):
 	summary = models.CharField(max_length = 200, default='No summary at this time')
 	bigposter = models.CharField(max_length = 300, default='No poster available')
 
+
+class Review(models.Model):
+	movie_id = models.CharField(max_length=10)
+	user = models.ForeignKey(User)
+	comment = models.TextField()
+	def __str__(self):
+		return self.comment
+
+class MovieInfoManager(models.Manager):
+	def delete_all(self):
+		# for m in MovieInfo.objects.all():
+		# 	for n in Review.objects.all():
+		# 		if m != n.movie:
+		# 			m.delete()
+		MovieInfo.objects.all().delete()
 # class page(models.Model):
 # 	title = models.CharField(max_length=100)
 # 	genre = models.CharField(max_length=100)
@@ -176,9 +193,6 @@ class MovieInfo(models.Model):
 # 	poster = models.CharField(max_length = 100, default='No poster available')
 # 	movie = models.ForeignKey(MovieInfo, default=1)
 
-class MovieInfoManager(models.Manager):
-	def delete_all(self):
-		MovieInfo.objects.all().delete()
 
 
 

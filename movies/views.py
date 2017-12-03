@@ -3,11 +3,13 @@ from __future__ import unicode_literals
 import unicodedata
 from django.shortcuts import render, get_object_or_404, render_to_response, get_list_or_404
 from django.db import transaction
-from .models import MovieInfo, MovieInfoManager
+from django.contrib.auth.models import User
+from .models import MovieInfo, MovieInfoManager, Review
+from django.contrib.auth import authenticate, login
 from imdb import IMDb
 from collections import Counter
 from django import forms
-from .forms import SearchForm
+from .forms import SearchForm, ReviewForm
 from imdb import IMDb
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 # Create your views here.
@@ -20,6 +22,8 @@ def search(request):
 		if 'r' in request.GET:
 			titleKey = 'titles'
 			ia = IMDb('http', useModule='lxml')
+			#reviews = Review.objects. 
+			#do something with reviews to prevent the review for the movie from going bye bye
 			m.delete_all()
 			for movies in ia.search_movie(searchname):
 					theID = movies.movieID
@@ -52,6 +56,7 @@ def search(request):
 					titleSearch = movies['title']
 					print titleSearch
 					theMovie = MovieInfo.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo)
+					#theMovieTwo = Movie.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo)
 					moviesData = MovieInfo.objects.filter(query=searchname) #modify this
 				# if not theMovie:
 				# 	moviesData = 'errorOne'
@@ -93,6 +98,8 @@ def search(request):
 					titleSearch = movies['title']
 					print titleSearch
 					theMovie = MovieInfo.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo)
+					#theMovieTwo = Movie.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo)
+
 					moviesData = MovieInfo.objects.filter(query=searchname).order_by('title')
 		if 'n' in request.GET:
 			titleKey = 'titles'
@@ -174,6 +181,7 @@ def search(request):
 						print titleSearch
 						if thaGenre in somelist:
 							theMovie = MovieInfo.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo)
+							#theMovieTwo = Movie.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo)
 							moviesData = MovieInfo.objects.filter(query=searchname)
 							count = count + 1
 				if count == 0:
@@ -184,10 +192,28 @@ def search(request):
 		return render(request, 'search.html')
 
 def movie_page(request, movie_id):
-	#movie_pg = get_list_or_404(MovieInfo, movie_id=movie_id)
 	movie_pg = MovieInfo.objects.get(movie_id=movie_id)
-	#print movie_pg.title
-	return render_to_response('movie.html',{'movie_pg':movie_pg})
+	theUser = request.user
+	print theUser.username
+	#userReviews = Review.objects.filter(user=theUser)
+	allReviews = Review.objects.filter(movie_id=movie_id)
+	print allReviews
+	if not allReviews:
+		allReviews = 'No reviews yet'
+	if request.GET:
+		theComment = request.GET.get('review')
+		print 'yuh'
+		if 'moovify' in request.GET:
+		 	theMovie = movie_pg
+	 		theReview = Review.objects.create(movie_id=movie_id, user=theUser,comment=theComment)
+	 		allReviews = Review.objects.filter(movie_id=movie_id)
+	 		return render_to_response('movie.html',{'movie_pg':movie_pg, 'theUser':theUser, 'getReviews': allReviews})
+ 	#movie_pg = get_list_or_404(MovieInfo, movie_id=movie_id)
+	else:
+		return render_to_response('movie.html',{'movie_pg':movie_pg, 'theUser': theUser, 'getReviews': allReviews})
+
+
+
 
 # def movie(request):
 # 	if request.GET:
@@ -225,5 +251,3 @@ def movie_page(request, movie_id):
 # 			return theMovie
 # 		except:
 # 			return 'errorTwo'
-	
-
