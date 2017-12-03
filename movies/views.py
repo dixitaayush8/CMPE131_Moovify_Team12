@@ -74,7 +74,6 @@ def search(request):
 						except UnicodeDecodeError:
 							cast = "Could not retrieve cast"
 					titleSearch = movies['title']
-					print titleSearch
 					theMovie = MovieInfo.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo, director=director, cast=cast)
 					#theMovieTwo = Movie.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo)
 					moviesData = MovieInfo.objects.filter(query=searchname) #modify this
@@ -136,7 +135,6 @@ def search(request):
 						except UnicodeDecodeError:
 							cast = "Could not retrieve cast"
 					titleSearch = movies['title']
-					print titleSearch
 					theMovie = MovieInfo.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo, director = director, cast=cast)
 					#theMovieTwo = Movie.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo)
 
@@ -194,7 +192,6 @@ def search(request):
 						except UnicodeDecodeError:
 							cast = "Could not retrieve cast"
 					titleSearch = movies['title']
-					print titleSearch
 					theMovie = MovieInfo.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo, director=director, cast=cast)
 					moviesData = MovieInfo.objects.filter(query=searchname).order_by('-release_date')
 		if request.GET.get('l') is not None:
@@ -256,7 +253,6 @@ def search(request):
 							except UnicodeDecodeError:
 								cast = "Could not retrieve cast"
 						titleSearch = movies['title']
-						print titleSearch
 						if thaGenre in somelist:
 							theMovie = MovieInfo.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo, director=director, cast=cast)
 							#theMovieTwo = Movie.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo)
@@ -264,7 +260,6 @@ def search(request):
 							count = count + 1
 				if count == 0:
 					moviesData = 'Genre does not match with title'
-				#moviesData = m.getMoviesByGenre(searchname,genre)
 		return render(request, 'search.html',{'moviesData': moviesData, 'search': True})
 	else:
 		return render(request, 'search.html')
@@ -272,22 +267,18 @@ def search(request):
 def movie_page(request, movie_id):
 	movie_pg = MovieInfo.objects.get(movie_id=movie_id)
 	theUser = request.user
-	print theUser.username
 	k = ia.get_movie(movie_pg.movie_id)
 	theMovieTitle = str(k)
-	print theMovieTitle
 	allReviews = Review.objects.filter(movie_id=movie_id)
 	average = allReviews.aggregate(Avg('rating'))
 	if not allReviews:
 		allReviews = 'No reviews yet'
 	if request.GET:
 		theComment = request.GET.get('review')
-		print 'yuh'
 		theRating = request.GET.get('number')
 		if 'moovify' in request.GET:
 		 	theMovie = movie_pg
 	 		theReview = Review.objects.create(movie_id=movie_id, user=theUser,comment=theComment, movie_title=theMovieTitle,rating=theRating)
-	 		print theReview.movie_title
 	 		allReviews = Review.objects.filter(movie_id=movie_id)
 	 		average = allReviews.aggregate(Avg('rating'))
 	 		return render_to_response('movie.html',{'movie_pg':movie_pg, 'theUser':theUser, 'getReviews': allReviews, 'average': average})
