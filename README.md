@@ -16,7 +16,7 @@ To run the project, download or clone this project and unzip the zip file of the
 Completed functional requirements:
 1. Users can log in or register.
 2. Users can search for movies by title, alphabetical order, release date, or genre. (Login is optional for searching.)
-3. Database insertion for movies during search to easily access more information about each movie upfront. 
-4. User can select a movie after searching for a movie and see information displayed about the movie. Unique URL used for each movie.
-5. User can comment reviews about movies and rate movies on a scale from 0 to 10 (decimals included).
-6. User can get search recommendations for movies based on what they reviewed.
+3. User can select a movie after searching for a movie and see information displayed about the movie. Unique URL used for each movie.
+4. User can comment reviews about movies.
+5. User can rate movies on a scale from 0 to 10 (decimals included) while reviewing.
+6. User can get search recommendations for movies based on the movies they gave positive reviews to.
