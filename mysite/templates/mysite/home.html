@@ -2,19 +2,28 @@
 <html>
 <head>
     <title>Home</title>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+    <blockquote class="blockquote text-center">
+        <div class="p-3 mb-2 bg-info text-white"> <h1 class="display-3">Welcome to Moovify</h1> </div>
+    </blockquote>
+
 </head>
 <body>
     {% if user.is_authenticated %}
-    <p>Welcome, {{user.username}}. </p>
-    <p>Handle that post-movie or pre-movie experience right with Moovify!</p>
-    <p><a href="/logout">Logout</a></p>
-    <p><a href="/search">Search a Movie</a></p>
-    <p><a href="/review_list">Movies I've Reviewed</a></p>
-    <p><a href="/suggested">Suggested Searches</a></p>
+    <p><h4> Hello, {{user.username}}. </h4></p>
+    <p><h4>Handle that post-movie or pre-movie experience right with Moovify!</h4></p>
+    <p><a href="/logout"> <h5 class= "text-left">Logout</h5></a></p>
+    <p><a href="/search"><h5 class= "text-left">Search a Movie</h5></a></p>
+    <p><a href="/review_list"><h5 class= "text-left">Movies I've Reviewed</h5></a></p>
+    <p><a href="/suggested"><h5 class= "text-left">Suggested Searches</h5></a></p>
     {% else %}
-    <p><a href="/login">Login</a></p>
-    <p><a href="/register">Register</a></p>
-    <p><a href="/search">Search a Movie</a></p>
+    <p><a href="/search"><h3 class = "text-center"> Search a Movie</h3></a></p>
+    <p><a href="/login"><h3 class = "text-center"> Login</h3></a></p>
+    <p><a href="/register"> <h3 class = "text-center"> Register</h3></a></p>
     {% endif %}
 </body>
 </html>
