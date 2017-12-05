@@ -1,20 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+    <blockquote class="blockquote text-center">
+        <div class="p-3 mb-2 bg-info text-white"> <h4 class="display-4">Login Page</h4> </div>
+    </blockquote>
+
     <title>Login</title>
 </head>
 <body>
     <form method="POST">
-        {% csrf_token %}
-        <p>
-            <label>Username</label>
-            <input type="text" name="username">
-        </p>
-        <p>
-            <label>Password</label>
-            <input type="password" name="password">
-        </p>
-        <button type="submit">Login</button>
+        <div class = "container">
+            <div class = "row">
+                <div class = "col">
+                </div>
+                <div class = "col">
+                    {% csrf_token %} 
+                    <p>
+                        <label>Username</label>
+                        <input type="text" name="username">
+                    </p>
+                    <p>
+                        <label>Password</label>
+                        <input type="password" name="password">
+                    </p>
+                    <button class= "btn btn-primary" type="submit">Login</button>
+                </div>
+                <div class = "col">
+                </div>
+            </div> 
+        </div>
+        
     </form>
 </body>
 </html>
