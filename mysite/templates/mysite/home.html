@@ -14,12 +14,16 @@
 </head>
 <body>
     {% if user.is_authenticated %}
-    <p><h4> Hello, {{user.username}}. </h4></p>
-    <p><h4>Handle that post-movie or pre-movie experience right with Moovify!</h4></p>
-    <p><a href="/logout"> <h5 class= "text-left">Logout</h5></a></p>
-    <p><a href="/search"><h5 class= "text-left">Search a Movie</h5></a></p>
-    <p><a href="/review_list"><h5 class= "text-left">Movies I've Reviewed</h5></a></p>
-    <p><a href="/suggested"><h5 class= "text-left">Suggested Searches</h5></a></p>
+    <div class="container-fluid">
+        <div class="col col-md-auto">
+            <p><h4> Hello, {{user.username}}. </h4></p>
+            <p><h4>Handle that post-movie or pre-movie experience right with Moovify!</h4></p>
+            <p><a href="/logout"> <h5 class= "text-left">Logout</h5></a></p>
+            <p><a href="/search"><h5 class= "text-left">Search a Movie</h5></a></p>
+            <p><a href="/review_list"><h5 class= "text-left">Movies I've Reviewed</h5></a></p>
+            <p><a href="/suggested"><h5 class= "text-left">Suggested Searches</h5></a></p>
+        </div>
+    </div>
     {% else %}
     <p><a href="/search"><h3 class = "text-center"> Search a Movie</h3></a></p>
     <p><a href="/login"><h3 class = "text-center"> Login</h3></a></p>
