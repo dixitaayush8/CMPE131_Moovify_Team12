@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+		
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+		<blockquote class="blockquote text-center">
+			<div class="p-3 mb-2 bg-info text-white"> <h4 class="display-4">Movie Search</h4> </div>
+		</blockquote>
+
 		<title>Search for a Movie</title>
 		<style>
 			img {
@@ -9,22 +17,36 @@
 		</style>
 		</head>
 		<body>
-			<p><a href="/">Home</a></p>
-			<form name="some" method = "GET" action="/search">
-			<div class="form-group">
-				<p>Enter a movie to search below:</p>
-				<input class="form-control" type="text" name="q" value="{{ request.GET.q }}">
-				<input type="submit" value="Search" class="btn btn-default" name = "r">
+			<div class="container-fluid">
+				<div class="row justify-content-start">
+					<div class = "col-4">
+						<p><a class = "text-warning" href="/"> <h4> Back to Home </h4></a></p>
+					</div>
+				</div>
 			</div>
+			<nav class="navbar navbar-light bg-faded">
+				<form name="some" method = "GET" action="/search">
+					<!-- <div class="form-group"> -->
+					<p>Enter a movie to search below:</p>
+					<input class="form-control" type="text" name="q" value="{{ request.GET.q }}">
+					<input type="submit" value="Search" class="btn btn-primary" name = "r">
+					<!-- </div> -->
+
 			<p>Custom search options: </p> 		
-			<input type="submit" value="Alphabetical" name="p">
-			<input type="submit" value="Release Date (Newest to Oldest)" name="n">
+			<input class = "btn btn-primary" type="submit" value="Alphabetical" name="p">
+			<input class = "btn btn-primary" type="submit" value="Release Date (Newest to Oldest)" name="n">
+			<p></p>
+
 			<p>Want to search a movie by genre? Type in one given genre below and click away! (Worth the wait!) </p>
-			<input type="submit" value="Filter" name="g">
-			<input class="form-control" type="text" name="l" value="{{ request.GET.l }}">
-			<p>**Genres limited to: 
+
+
+				<input class="form-control" type="text" name="l" value="{{ request.GET.l }}">
+				<input type="submit" value="Filter" class = "btn btn-primary" name="g">	
+
+			<p>**Genres limited to: </p>
 				<p>Action, Animation, Biography, Comedy, Crime, Documentary, Drama, Family, Fantasy, Film-Noir, History, Horror, Music, Musical, Mystery, Romance, Sci-Fi, Sport, Thriller, War, and Western.</p>
 			</form>
+		</nav>
 			{% if search == True %}
 			{% if moviesData == "errorOne" %}
 			<h3>No movies to display</h3>
@@ -34,10 +56,26 @@
 			<h3>Genre does not match with the movie.</h3>
 			{% else %}
 			{% for m in moviesData %}
-			<img src="{{m.bigposter}}" width=100>
-			<h3><a href="/movie/{{m.movie_id}}" name = "clicked">{{m.title}}</a></h3> 
-			<p>{{m.release_date}}</p>
-			<p>{{m.genre}}</p>
+
+			<div class="container-fluid">
+				<div class="media">
+					<div class="media-left">
+						<a href="#">
+							<img src="{{m.bigposter}}" class="rounded" width=100>
+							<p></p>
+						</a>
+					</div>
+
+					<div class="media-body">
+						<div class="col col-md-auto">
+							<h4 class= "media-heading"> <a href="/movie/{{m.movie_id}}" name = "clicked">{{m.title}}</a></h4>
+							<p>{{m.release_date}}</p>
+							<p>{{m.genre}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
 			{% endfor %}
 			{% endif %}
 			{% endif %}
