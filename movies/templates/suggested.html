@@ -1,17 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+    <blockquote class="blockquote text-center">
+        <div class="p-3 mb-2 bg-info text-white"> <h4 class="display-4">Suggested Searches</h4> </div>
+    </blockquote>
+
 	<body>
 		<title>Suggested Searches</title>
-		<p><a href="/">Home</a></p>
-		{% if movies == 'Nonexistent' %}
-		<p>No suggested searches yet. <a href="/search">Search</a> and rate a GOOD movie first!</p>
+		<div class="container-fluid">
+  			<div class="col col-md-auto">
+				<p><a class = "text-warning" href="/"><h4>Back to Home</h4></a></p>
+				{% if movies == 'Nonexistent' %}
+				<p>No suggested searches yet. <a href="/search">Search</a> and rate a GOOD movie first!</p>
+			</div>
+		</div>
 		{% else %}
-		<p>Copy the movie title you want and...</p>
+		<h5 class="text-primary"><p>Copy the movie title you want and...</p></h5>
 		{% for y in movies %}
-		<h3>{{y}}</h3>
+		<h4>{{y}}</h4>
 		{% endfor %}
-		<p><a href="/search">...paste it here!</a></p>
+		<p></p>
+		<h5><p><a href="/search">...paste it here!</a></p></h5>
 		{% endif %}
 	</body>
 </head>
