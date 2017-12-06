@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+		
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
 	<style>
 img {
 	max-width:100%;
@@ -8,41 +13,58 @@ img {
 </style>
 	<title>{{ movie_pg.title }}</title>
 	<body>
-		<img src="{{movie_pg.bigposter}}" width = 300/>
-    <h2>{{ movie_pg.title }}</h2>
-    <h3>Year: </h3>
-    <p>{{movie_pg.release_date}}</p>
-	<h3>Plot: </h3>    
-	<p>{{movie_pg.summary}}</p> 
-	<h3>Genres: </h3>
-	<p>{{movie_pg.genre}}</p>
-	<h3>Director: </h3>
-	<p>{{movie_pg.director}}</p>
-	<h3>Cast: </h3>
-	<p>{{movie_pg.cast}}</p>
-	<h3>Current Rating: </h3>
-	{% if average.rating__avg == 'None' %}
-	<p>No average ratings yet</p>
-	{% else %}
-	<p>{{average.rating__avg}}/10.0</p>
-	{% endif %}
-	{% if theUser.is_authenticated %}
-		<p>Write a review, {{theUser.username}}.</p>
-	<form name="some" method = "GET" action="/movie/{{movie_pg.movie_id}}">
-		<input class="form-control" type="text" name="review" value="Type review here">
-		<input class="form-control" type="text" name="number" value="number between 0-10">
-		<input type="submit" value="submit" class="btn btn-default" name = "moovify">
-	</form>
-	{% endif %}
-	<h3>Reviews: </h3>
-	{% if getReviews == 'No reviews yet' %}
-	<p>No reviews yet.</p>
-	{% else %}
-	{% for m in getReviews %}
-	<p>{{m.user}}: {{m.comment}}</p>
-	<p>Rating: {{m.rating}}</p>
-	{% endfor %}
-	{% endif %}
+		<div class="container-fluid">
+				<div class="media">
+					<div class="media-left">
+						<a href="#">
+							<img src="{{movie_pg.bigposter}}" class="rounded" width=300>
+							<p></p>
+						</a>
+					</div>
+
+					<div class="media-body">
+						<div class="col col-md-auto">
+							<h1 class= "media-heading"> <h1>{{ movie_pg.title }}</h1></h1>
+							<h4 class="text-info">Year: </h4>
+							<p>{{movie_pg.release_date}}</p>
+							<h4 class="text-info">Plot: </h4>    
+							<p>{{movie_pg.summary}}</p> 
+							<h4 class="text-info">Genres: </h4>
+							<p>{{movie_pg.genre}}</p>
+							<h4 class="text-info">Director: </h4>
+							<p>{{movie_pg.director}}</p>
+							<h4 class="text-info">Cast: </h4>
+							<p>{{movie_pg.cast}}</p>
+							<h4 class="text-info">Current Rating: </h4>
+							{% if average.rating__avg == 'None' %}
+							<p>No average ratings yet</p>
+							{% else %}
+							<p>{{average.rating__avg}}/10.0</p>
+							{% endif %}
+							{% if theUser.is_authenticated %}
+							<p>Write a review, {{theUser.username}}.</p>
+							<form name="some" method = "GET" action="/movie/{{movie_pg.movie_id}}">
+								<input class="form-control" type="text" name="review" value="Type review here">
+								<input class="form-control" type="text" name="number" value="number between 0-10">
+								<input type="submit" value="submit" class="btn btn-primary" name = "moovify">
+								<p></p>
+							</form>
+							{% endif %}
+							<h4 class="text-info">Reviews: </h4>
+							{% if getReviews == 'No reviews yet' %}
+							<p>No reviews yet.</p>
+							{% else %}
+							{% for m in getReviews %}
+							<p>{{m.user}}: {{m.comment}}</p>
+							<p>Rating: {{m.rating}}</p>
+							{% endfor %}
+							{% endif %}
+						</div>
+					</div>
+
+				</div>
+			</div>
+
 	</body>
 </head>
 </html>
