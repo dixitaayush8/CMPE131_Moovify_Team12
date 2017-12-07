@@ -305,5 +305,6 @@ def suggested(request):
 				if len(i['title']) < 50:
 					movieResults.append(i['title'])
 			movieResults.remove(r.movie_title)
-			movies.append(random.choice(movieResults))
+			theResults = list(set(movieResults))
+			movies.append(random.choice(theResults))
 	return render_to_response('suggested.html',{'movies': movies})
