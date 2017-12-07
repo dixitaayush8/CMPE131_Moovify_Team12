@@ -302,7 +302,8 @@ def suggested(request):
 	for r in reviews:
 		if r.rating > 5:
 			for i in ia.search_movie(r.movie_title):
-				movieResults.append(i['title'])
+				if len(i['title']) < 50:
+					movieResults.append(i['title'])
 			movieResults.remove(r.movie_title)
 			movies.append(random.choice(movieResults))
 	return render_to_response('suggested.html',{'movies': movies})
