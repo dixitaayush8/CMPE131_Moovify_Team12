@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,7 +25,7 @@ SECRET_KEY = '9-$)macmr9rcgt1ze3okk35j@+jw$js2_3uuhd!#8fwzs61vb('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['radiant-forest-14123.herokuapp.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -83,8 +82,6 @@ DATABASES = {
     }
 }
 
-DATABASES[‘default’] = dj_database_url.config()
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -124,9 +121,3 @@ LOGIN_REDIRECT_URL = '/'
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = ‘staticfiles’
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, ‘static’),
-)
-
-SECURE_PROXY_SSL_HEADER = (‘HTTP_X_FORWARDED_PROTO’, ‘https’)
