@@ -25,6 +25,7 @@ def search(request):
 			titleKey = 'titles'
 			ia = IMDb('http', useModule='lxml')
 			m.delete_all()
+			countOne = 0
 			for movies in ia.search_movie(searchname):
 					theID = movies.movieID
 					theRealDeal = ia.get_movie(theID)
@@ -76,7 +77,11 @@ def search(request):
 					titleSearch = movies['title']
 					theMovie = MovieInfo.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo, director=director, cast=cast)
 					#theMovieTwo = Movie.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo)
-					moviesData = MovieInfo.objects.filter(query=searchname) #modify this
+					moviesData = MovieInfo.objects.filter(query=searchname)
+					countOne = countOne + 1
+			if countOne == 0:
+				moviesData = "there is an error"
+					#print type(moviesData)
 				# if not theMovie:
 				# 	moviesData = 'errorOne'
 	 		# except:
@@ -86,6 +91,7 @@ def search(request):
 			titleKey = 'titles'
 			ia = IMDb('http', useModule='lxml')
 			m.delete_all()
+			countTwo = 0
 			for movies in ia.search_movie(searchname):
 					theID = movies.movieID
 					theRealDeal = ia.get_movie(theID)
@@ -139,10 +145,14 @@ def search(request):
 					#theMovieTwo = Movie.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo)
 
 					moviesData = MovieInfo.objects.filter(query=searchname).order_by('title')
+					countTwo = countTwo + 1
+			if countTwo == 0:
+				moviesData = "there is an error"
 		if 'n' in request.GET:
 			titleKey = 'titles'
 			ia = IMDb('http', useModule='lxml')
 			m.delete_all()
+			countThree = 0
 			for movies in ia.search_movie(searchname):
 					theID = movies.movieID
 					theRealDeal = ia.get_movie(theID)
@@ -194,6 +204,9 @@ def search(request):
 					titleSearch = movies['title']
 					theMovie = MovieInfo.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo, director=director, cast=cast)
 					moviesData = MovieInfo.objects.filter(query=searchname).order_by('-release_date')
+					countThree = countThree + 1
+			if countThree == 0:
+				moviesData = "there is an error"
 		if request.GET.get('l') is not None:
 			thaGenre = request.GET.get('l')
 			thaGenre = thaGenre.lower()
