@@ -1,15 +1,9 @@
 # CMPE131_Moovify_Team12
 
-Do the following procedures in order:
-
-If you are running this application on Windows, download and install/"repair" [Microsoft Visual C++ Compiler for Python 2.7](https://www.microsoft.com/en-us/download/details.aspx?id=44266). If you are running this application on MacOS, no need to install C++ compiler because it is built-in.
-
-To ensure that this project works (see requirements.txt for reference): 
-1. download and install [Python 2.7](https://www.python.org/downloads/release/python-2713/). If using Windows, set appropriate paths in environment variables after installing Python 2.7.
-
-2. Install Django (pip install django after installing Python 2.7).
-
-3. Install the [IMDBPy API](https://github.com/alberanid/imdbpy) (pip install git+https://github.com/alberanid/imdbpy).
+Procedure: 
+1. Download and install Python 3.
+2. Install the requirements.txt file of this project.
+3. Install the imdbpy-legacy branch of the IMDBPy API: https://github.com/alberanid/imdbpy/tree/imdbpy-legacy 
 
 To run the project, download or clone this project and unzip the zip file of the project. Afterwards, on Terminal/Command Prompt, navigate to the directory of the project, type in "python manage.py runserver", and copy and paste the link displayed on the console to your browser.
 
