@@ -77,6 +77,7 @@ def search(request):
 					titleSearch = movies['title']
 					theMovie = MovieInfo.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo, director=director, cast=cast)
 					#theMovieTwo = Movie.objects.create(title=titleSearch,movie_id=theID,genre=theGenre,release_date=theYear,rating=theRating, query=searchname, poster=posterOne, summary=plot, bigposter=posterTwo)
+					#print theMovie.title
 					moviesData = MovieInfo.objects.filter(query=searchname)
 					countOne = countOne + 1
 			if countOne == 0:
